@@ -29,11 +29,11 @@ func init() {
 		log.Fatal(2, "Fail to get section 'database': %v", err)
 	}
 
-	dbType = sec.Key("TYPE").String()
-	dbName = sec.Key("NAME").String()
-	user = sec.Key("USER").String()
-	password = sec.Key("PASSWORD").String()
-	host = sec.Key("HOST").String()
+	dbType = sec.Key("mysql").String()
+	dbName = sec.Key("blog").String()
+	user = sec.Key("root").String()
+	password = sec.Key("root").String()
+	host = sec.Key("172.31.230.85").String()
 	tablePrefix = sec.Key("TABLE_PREFIX").String()
 
 	db, err = gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
@@ -58,3 +58,4 @@ func init() {
 func CloseDB() {
 	defer db.Close()
 }
+
