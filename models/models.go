@@ -1,13 +1,11 @@
 package models
 
 import (
-	"log"
 	"fmt"
-
+	"gin-blog/pkg/setting"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-
-	"gin-blog/pkg/setting"
+	"log"
 )
 
 var db *gorm.DB
@@ -21,7 +19,7 @@ type Model struct {
 func init() {
 	var (
 		err error
-		dbType, dbName, user, password, host, tablePrefix string
+		 dbType,dbName, user, password, host, tablePrefix string
 	)
 
 	sec, err := setting.Cfg.GetSection("database")
@@ -36,11 +34,12 @@ func init() {
 	host = sec.Key("172.31.230.85").String()
 	tablePrefix = sec.Key("TABLE_PREFIX").String()
 
-	db, err = gorm.Open(dbType, fmt.Sprintf("%s:%s@tcp(%s)/%s?charset=utf8&parseTime=True&loc=Local",
+	db, err = gorm.Open(dbType, fmt.Sprintf("%s:%s@(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		user,
 		password,
 		host,
 		dbName))
+	//db,err := gorm.Open("mysql","root:root@(172.31.230.85)/test?charset=utf8mb4&parseTime=True&loc=Local")
 
 	if err != nil {
 		log.Println(err)
