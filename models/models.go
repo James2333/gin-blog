@@ -19,7 +19,8 @@ type Model struct {
 func init() {
 	var (
 		err error
-		 dbType,dbName, user, password, host, tablePrefix string
+		 dbName, user, password, host string
+		 tablePrefix string
 	)
 
 	sec, err := setting.Cfg.GetSection("database")
@@ -27,14 +28,18 @@ func init() {
 		log.Fatal(2, "Fail to get section 'database': %v", err)
 	}
 
-	dbType = sec.Key("mysql").String()
-	dbName = sec.Key("blog").String()
-	user = sec.Key("root").String()
-	password = sec.Key("root").String()
-	host = sec.Key("172.31.230.85").String()
+	//dbType = sec.Key("mysql").String()
+	//dbName = sec.Key("blog").String()
+	//user = sec.Key("root").String()
+	//password = sec.Key("root").String()
+	//host = sec.Key("172.31.230.85").String()
 	tablePrefix = sec.Key("TABLE_PREFIX").String()
+	dbName="blog"
+	user="root"
+	password="root"
+	host="172.31.230.85"
 
-	db, err = gorm.Open(dbType, fmt.Sprintf("%s:%s@(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+	db, err = gorm.Open("mysql", fmt.Sprintf("%s:%s@(%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
 		user,
 		password,
 		host,
